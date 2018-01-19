@@ -35,11 +35,11 @@ namespace BlockchainLoadTest.Models.Cloud.MicrosoftAzure
             tenantId = "db427121-a365-4f43-b04e-117bec05cb45";
             //clientId = "67da947e-800e-4e51-b20a-671c0cd2fc11"; //5a396a8d-87e6-4bff-a6e6-a2aa143f36f2
             clientId = "5a396a8d-87e6-4bff-a6e6-a2aa143f36f2";
-            clientSecret = "5KIqXgRemzsKHZEuwsOpWfE+jVB0PNmymCCL1xUzFyI=";
+            clientSecret = "";
             subscriptionId = "ac74a6ab-5208-4d5b-9818-83010882b4e0";
         }
 
-        public void Create()
+        public async Task Create()
         {
             try
             {
@@ -89,11 +89,11 @@ namespace BlockchainLoadTest.Models.Cloud.MicrosoftAzure
 
                 //Console.WriteLine("Uploading template file...");
                 CloudBlockBlob templateblob = container.GetBlockBlobReference(templateJSON);
-                templateblob.UploadFromFileAsync(templateJSON).Wait();
+                await templateblob.UploadFromFileAsync(templateJSON);
 
                 //Console.WriteLine("Uploading parameters file...");
                 CloudBlockBlob paramblob = container.GetBlockBlobReference(paramsJSON);
-                paramblob.UploadFromFileAsync(paramsJSON).Wait();
+                await paramblob.UploadFromFileAsync(paramsJSON);
 
                 //Deploy
                 var templatePath = String.Format("https://{0}.blob.core.windows.net/templates/{1}", storageAccountName, templateJSON);
